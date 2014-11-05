@@ -15,6 +15,8 @@
  */
 package com.example.hellojni;
 
+import com.apress.swig.Unix;
+
 import android.app.Activity;
 import android.widget.TextView;
 import android.os.Bundle;
@@ -33,7 +35,7 @@ public class HelloJni extends Activity
          * function.
          */
         TextView  tv = new TextView(this);
-        tv.setText( stringFromJNI() );
+        tv.setText(Long.toString(Unix.getuid()));
         setContentView(tv);
     }
 
@@ -62,5 +64,6 @@ public class HelloJni extends Activity
      */
     static {
         System.loadLibrary("hello-jni");
+        System.loadLibrary("shrpx");
     }
 }

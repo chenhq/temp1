@@ -14,12 +14,12 @@
 #
 LOCAL_PATH := $(call my-dir)
 
-#include $(CLEAR_VARS)
-#
-#LOCAL_MODULE    := hello-jni
-#LOCAL_SRC_FILES := hello-jni.c
-#
-#include $(BUILD_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := hello-jni
+LOCAL_SRC_FILES := hello-jni.c
+
+include $(BUILD_SHARED_LIBRARY)
 
 
 # libspdylay
@@ -82,8 +82,14 @@ LOCAL_EXPORT_C_INCLUDES := /home/think/android-ndk-r10c/usr/local/include /home/
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE    := sharpx
-LOCAL_SRC_FILES := util.cc util.h timegm.c timegm.h base64.h \
+LOCAL_MODULE    := shrpx
+
+MY_SWIG_PACKAGE := com.apress.swig
+MY_SWIG_INTERFACES := Unix.i
+MY_SWIG_TYPE := c
+include ${LOCAL_PATH}/my-swig-generate.mk
+
+LOCAL_SRC_FILES += util.cc util.h timegm.c timegm.h base64.h \
 	shrpx_config.cc shrpx_config.h \
 	shrpx_error.h \
 	shrpx_listen_handler.cc shrpx_listen_handler.h \
@@ -107,8 +113,6 @@ LOCAL_SRC_FILES := util.cc util.h timegm.c timegm.h base64.h \
 	http-parser/http_parser.c http-parser/http_parser.h \
 	shrpx.cc shrpx.h
 LOCAL_WHOLE_STATIC_LIBRARIES := event_openssl event ssl crypto libspdylay
-#LOCAL_LDLIBS += -lstdc++ -lz -lc 
-#LOCAL_CPP_FEATURES := rtti
-#LOCAL_CPPFLAGS += -frtti
-include $(BUILD_EXECUTABLE)
-#include $(BUILD_STATIC_LIBRARY)
+#LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
+#include $(BUILD_EXECUTABLE)
+include $(BUILD_SHARED_LIBRARY)
