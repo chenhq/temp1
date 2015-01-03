@@ -15,8 +15,6 @@
  */
 package com.example.hellojni;
 
-import com.apress.swig.Unix;
-
 import android.app.Activity;
 import android.widget.TextView;
 import android.os.Bundle;
@@ -35,7 +33,9 @@ public class HelloJni extends Activity
          * function.
          */
         TextView  tv = new TextView(this);
-        tv.setText(Long.toString(Unix.getuid()));
+        int i = mymain();
+        
+        tv.setText(Integer.toString(i));
         setContentView(tv);
     }
 
@@ -44,6 +44,7 @@ public class HelloJni extends Activity
      * with this application.
      */
     public native String  stringFromJNI();
+    public native int mymain();
 
     /* This is another native method declaration that is *not*
      * implemented by 'hello-jni'. This is simply to show that

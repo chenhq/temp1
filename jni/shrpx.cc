@@ -52,6 +52,7 @@
 #include "shrpx_config.h"
 #include "shrpx_listen_handler.h"
 #include "shrpx_ssl.h"
+#include "com_example_hellojni_HelloJni.h"
 
 namespace shrpx {
 
@@ -262,7 +263,6 @@ int event_loop()
       !get_config()->spdy_downstream_no_tls ?
       ssl::create_ssl_client_context() : 0;
   }
-
   ListenHandler *listener_handler = new ListenHandler(evbase, sv_ssl_ctx,
                                                       cl_ssl_ctx);
   if(get_config()->daemon) {
@@ -277,18 +277,19 @@ int event_loop()
   }
 
   evconnlistener *evlistener6, *evlistener4;
+
   evlistener6 = create_evlistener(listener_handler, AF_INET6);
+
   evlistener4 = create_evlistener(listener_handler, AF_INET);
   if(!evlistener6 && !evlistener4) {
     LOG(FATAL) << "Failed to listen on address "
                << get_config()->host << ", port " << get_config()->port;
+    //return get_config()->port;
     exit(EXIT_FAILURE);
   }
-
   // ListenHandler loads private key, and we listen on a priveleged port.
   // After that, we drop the root privileges if needed.
   drop_privileges();
-
   if(get_config()->num_worker > 1) {
     listener_handler->create_worker_thread(get_config()->num_worker);
   } else if(get_config()->downstream_proto == PROTO_SPDY) {
@@ -1230,8 +1231,9 @@ int main(int argc, char **argv)
   act.sa_handler = SIG_IGN;
   sigaction(SIGPIPE, &act, 0);
 
-  event_loop();
 
+
+  event_loop();
   ssl::teardown_ssl_lock();
 
   return 0;
@@ -1243,8 +1245,15 @@ int main(int argc, char **argv)
 //{
 //  return shrpx::main(argc, argv);
 //}
+JNIEXPORT jint JNICALL Java_com_example_hellojni_HelloJni_mymain(JNIEnv *, jobject) {
+	char *a [] = {"./shrpxx", "-k", "-p", "-f", "localhost,8000", "-b", "183.136.130.82,42671" };
+	char **s = a;
 
-int main()
+	shrpx::main(7, s);
+	return 900;
+
+}
+int mymain()
 {
   char *a [] = {"./shrpxx", "-k", "-p", "-f", "localhost,8000", "-b", "183.136.130.82,42671" };
   char **s = a;

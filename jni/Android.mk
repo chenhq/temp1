@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+MY_NDK_HOME := /home/cw/android_dev/android-ndk-r10c
+
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
@@ -49,45 +52,45 @@ include $(BUILD_STATIC_LIBRARY)
 ## libspdylay
 #include $(CLEAR_VARS)
 #LOCAL_MODULE    := libspdylay
-#LOCAL_SRC_FILES := /home/think/android-ndk-r10c/usr/local/lib/libcrypto.a
-#LOCAL_EXPORT_C_INCLUDES := /home/think/android-ndk-r10c/usr/local/include /home/think/android-ndk-r10c/usr/local/include/openssl
+#LOCAL_SRC_FILES := $(MY_NDK_HOME)/usr/local/lib/libcrypto.a
+#LOCAL_EXPORT_C_INCLUDES := $(MY_NDK_HOME)/usr/local/include $(MY_NDK_HOME)/usr/local/include/openssl
 #include $(PREBUILT_STATIC_LIBRARY)
 
 # crypto
 include $(CLEAR_VARS)
 LOCAL_MODULE    := crypto
-LOCAL_SRC_FILES := /home/think/android-ndk-r10c/usr/local/lib/libcrypto.a
-LOCAL_EXPORT_C_INCLUDES := /home/think/android-ndk-r10c/usr/local/include /home/think/android-ndk-r10c/usr/local/include/openssl
+LOCAL_SRC_FILES := $(MY_NDK_HOME)/usr/local/lib/libcrypto.a
+LOCAL_EXPORT_C_INCLUDES := $(MY_NDK_HOME)/usr/local/include $(MY_NDK_HOME)/usr/local/include/openssl
 include $(PREBUILT_STATIC_LIBRARY)
 
 # ssl
 include $(CLEAR_VARS)
 LOCAL_MODULE    := ssl
-LOCAL_SRC_FILES := /home/think/android-ndk-r10c/usr/local/lib/libssl.a
-LOCAL_EXPORT_C_INCLUDES := /home/think/android-ndk-r10c/usr/local/include /home/think/android-ndk-r10c/usr/local/include/openssl
+LOCAL_SRC_FILES := $(MY_NDK_HOME)/usr/local/lib/libssl.a
+LOCAL_EXPORT_C_INCLUDES := $(MY_NDK_HOME)/usr/local/include $(MY_NDK_HOME)/usr/local/include/openssl
 include $(PREBUILT_STATIC_LIBRARY)
 
 # event
 include $(CLEAR_VARS)
 LOCAL_MODULE    := event
-LOCAL_SRC_FILES := /home/think/android-ndk-r10c/usr/local/lib/libevent.a
-LOCAL_EXPORT_C_INCLUDES := /home/think/android-ndk-r10c/usr/local/include /home/think/android-ndk-r10c/usr/local/include/event2
+LOCAL_SRC_FILES := $(MY_NDK_HOME)/usr/local/lib/libevent.a
+LOCAL_EXPORT_C_INCLUDES := $(MY_NDK_HOME)/usr/local/include $(MY_NDK_HOME)/usr/local/include/event2
 include $(PREBUILT_STATIC_LIBRARY)
 
 # event_openssl
 include $(CLEAR_VARS)
 LOCAL_MODULE    := event_openssl
-LOCAL_SRC_FILES := /home/think/android-ndk-r10c/usr/local/lib/libevent_openssl.a
-LOCAL_EXPORT_C_INCLUDES := /home/think/android-ndk-r10c/usr/local/include /home/think/android-ndk-r10c/usr/local/include/openssl
+LOCAL_SRC_FILES := $(MY_NDK_HOME)/usr/local/lib/libevent_openssl.a
+LOCAL_EXPORT_C_INCLUDES := $(MY_NDK_HOME)/usr/local/include $(MY_NDK_HOME)/usr/local/include/openssl
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE    := shrpx
 
-MY_SWIG_PACKAGE := com.apress.swig
-MY_SWIG_INTERFACES := Unix.i
-MY_SWIG_TYPE := c
-include ${LOCAL_PATH}/my-swig-generate.mk
+#MY_SWIG_PACKAGE := com.apress.swig
+#MY_SWIG_INTERFACES := Unix.i
+#MY_SWIG_TYPE := c
+#include ${LOCAL_PATH}/my-swig-generate.mk
 
 LOCAL_SRC_FILES += util.cc util.h timegm.c timegm.h base64.h \
 	shrpx_config.cc shrpx_config.h \
@@ -111,7 +114,7 @@ LOCAL_SRC_FILES += util.cc util.h timegm.c timegm.h base64.h \
 	shrpx_worker.cc shrpx_worker.h \
 	shrpx_accesslog.cc shrpx_accesslog.h \
 	http-parser/http_parser.c http-parser/http_parser.h \
-	shrpx.cc shrpx.h
+	shrpx.cc shrpx.h com_example_hellojni_HelloJni.h
 LOCAL_WHOLE_STATIC_LIBRARIES := event_openssl event ssl crypto libspdylay
 #LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
 #include $(BUILD_EXECUTABLE)

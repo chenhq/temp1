@@ -67,6 +67,14 @@ JNIEXPORT jstring JNICALL Java_com_example_hellojni_HelloJni_stringFromJNI
 
 /*
  * Class:     com_example_hellojni_HelloJni
+ * Method:    mymain
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_example_hellojni_HelloJni_mymain
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_hellojni_HelloJni
  * Method:    unimplementedStringFromJNI
  * Signature: ()Ljava/lang/String;
  */
